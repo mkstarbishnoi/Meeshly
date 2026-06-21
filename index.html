@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meeshly - Order on WhatsApp</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 400px; margin: auto; }
+    input, button { width: 100%; padding: 12px; margin: 8px 0; font-size: 16px; }
+    button { background: #25D366; color: white; border: none; border-radius: 8px; font-weight: bold; }
+    .product { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin: 15px 0; }
+  </style>
+</head>
+<body>
+  <h2>Meeshly Shop</h2>
+  
+  <div class="product">
+    <h3>iPhone 15</h3>
+    <p>Price: ₹79,999</p>
+    <button onclick="orderNow('iPhone 15', 79999)">Buy on WhatsApp</button>
+  </div>
+
+  <div class="product">
+    <h3>Samsung S24</h3>
+    <p>Price: ₹69,999</p>
+    <button onclick="orderNow('Samsung S24', 69999)">Buy on WhatsApp</button>
+  </div>
+
+  <h3>Your Details</h3>
+  <input type="text" id="name" placeholder="Your Name" required>
+  <input type="text" id="address" placeholder="Full Address" required>
+  <input type="tel" id="phone" placeholder="Your Phone" required>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyBTgqiHmfXF929O5JidyTNvATMqp7aeYWs",
+      authDomain: "meeshly.firebaseapp.com",
+      projectId: "meeshly",
+      storageBucket: "meeshly.firebasestorage.app",
+      messagingSenderId: "702731484473",
+      appId: "1:702731484473:web:79a488c1047dd23671bce8"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const SHOP_WHATSAPP = "917691072694";
+    
+    window.orderNow = function(product, price) {
+      const name = document.getElementById('name').value;
+      const address = document.getElementById('address').value;
+      const phone = document.getElementById('phone').value;
+      
+      if(!name || !address || !phone) {
+        alert('Please fill all details');
+        return;
+      }
+      
+      const msg = `New Order from Meeshly:%0A%0AProduct: ${product}%0APrice: ₹${price}%0A%0AName: ${name}%0AAddress: ${address}%0APhone: ${phone}`;
+      window.open(`https://wa.me/${SHOP_WHATSAPP}?text=${msg}`, '_blank');
+    }
+  </script>
+</body>
+</html>
